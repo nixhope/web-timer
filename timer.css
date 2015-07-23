@@ -1,0 +1,33 @@
+body {
+  font-family: Avenir Next, Nunito, sans-serif;
+  text-align: center;
+  padding: 1px;
+  margin: 1px;
+}
+
+#clock-container { 
+  display: inline-block;
+  position: relative;
+  width: 50%;
+  padding-bottom: 0%;
+  vertical-align: middle;
+  overflow: hidden;
+} 
+
+.dodeca, #face {
+  stroke-width: 2px; stroke: black;
+}
+
+.quarter { stroke-width: 3px; stroke: black; }
+
+#hour, #min, #sec { fill: black; }
+
+#sec { stroke: red; }
+
+#digital-time {
+  font-weight: 100;
+  font-size: 8vw;
+  position: relative;
+  top: -2vw;
+}
+
