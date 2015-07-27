@@ -26,6 +26,7 @@ $('#reset-button').click(function() {
 	paused = false;
 	$('.time-settings').show();
 	$('#clock-container').hide();
+	elapsedSeconds = 0;
 });
 
 // Do stuff while clock is running
@@ -33,21 +34,35 @@ function updateTime() {
 	if (timerRunning && !paused) {
 		elapsedSeconds++;
 
-		// Update clock
 		function rotate(el, deg) {
 			$(el).attr('transform', 'rotate('+deg+' 50 50)')
 		}
-		rotate('#sec', (6*elapsedSeconds)%360);
-		rotate('#min', (6*Math.floor(elapsedSeconds/60))%360);
 
-		// Update digital-time
+		if ($('#countup-radio').is(":checked")) { // Counting up
+			// Update clock
+			rotate('#sec', (6*elapsedSeconds)%360);
+			rotate('#min', (6*Math.floor(elapsedSeconds/60))%360);
 
-		var s = (elapsedSeconds%60).toString();
-		if (s.length < 2)
-			s = '0'+s;
-		$('#digital-time').text(Math.floor(elapsedSeconds/60)+':'+s);
+			// Update digital-time
+			var s = (elapsedSeconds%60).toString();
+			if (s.length < 2)
+				s = '0'+s;
+			$('#digital-time').text(Math.floor(elapsedSeconds/60)+':'+s);
+		} else { // Counting down
+			var remainingSeconds = targetSeconds - elapsedSeconds;
 
-		// Do stuff if we've reached the max time
+			// Update clock
+			rotate('#sec', (6*remainingSeconds)%360);
+			rotate('#min', (6*Math.floor(remainingSeconds/60))%360);
+
+			// Update digital-time
+			var s = (remainingSeconds%60).toString();
+			if (s.length < 2)
+				s = '0'+s;
+			$('#digital-time').text(Math.floor(remainingSeconds/60)+':'+s);
+		}
+
+		// Do stuff if we've reached the target time
 		if (elapsedSeconds == targetSeconds) {
 			timerRunning = false;
 
